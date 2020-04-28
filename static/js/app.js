@@ -1,56 +1,129 @@
 //extracting table from data file 
 var ufotable = data
 
-
+//selecting  the button 
 var button = d3.select("#filter-btn");
 
-// Select the form
+// Selecting the form
 var form = d3.select("#form-group");
-
-var table = d3.select("table");
-addtbody = table.append("tbody")
+//getting the tbody section 
+var addtbody = d3.select("tbody");
 
 // Complete the event handler function for the form
 function runEnter() {
-
-  // Prevent the page from refreshing
-  d3.event.preventDefault();
+  //setting filtered data to extracted data file
+  var filteredData = ufotable 
+  // Select the input element and get the raw HTML  based off #datetime id 
+ function propinput(name){ 
+    var inputElement = d3.select(`${name}`);
+  // Getting the value property of the input element
+  return inputValue = inputElement.property("value");
+ };
   
-  // Select the input element and get the raw HTML node
-  var inputElement = d3.select("#datetime");
-  //console.log(inputElement);
-  // Get the value property of the input element
-  var inputValue = inputElement.property("value");
-  var filteredData = [ufotable.filter(record => record.datetime === inputValue)];
-  filteredData.forEach((record) => {
-    //add a new row for each object
-    var row = addtbody.append("tr");
-    //looping through every object 
-    Object.entries(record).forEach(([key, value]) => {
-        //adding cells th element to html 
-         var cell = row.append("th");
-         //adding cell text value to html
-          cell.text(value);
-        });  
-});
+  //if statement to handle filtering 
+  if (propinput("#datetime") != "") {
+        //filter data based off input value
+        filteredData = filteredData.filter(record => record.datetime === inputValue);
+        //ensure the table body is blank 
+        addtbody.html("");
+        //loop through each reord 
+        filteredData.forEach((record) => {
+          //add a new row for each object
+          var row = addtbody.append("tr").attr('class', 'table-row');
+          //looping through every object 
+          Object.entries(record).forEach(([key, value]) => {
+              //adding cells th element to html 
+              var cell = row.append("th");
+              //adding cell text value to html
+                cell.text(value);
+              });  
+          });
+  }
+  
+  //check to see if cityis blank 
+  else if (propinput("#City") != "") {
+        //filter data based off input value
+        filteredData = filteredData.filter(record => record.city === inputValue);
+        //ensure the table body is blank 
+        addtbody.html("");
+        //loop through each reord 
+        filteredData.forEach((record) => {
+          //add a new row for each object
+          var row = addtbody.append("tr").attr('class', 'table-row');
+          //looping through every object 
+          Object.entries(record).forEach(([key, value]) => {
+              //adding cells th element to html 
+              var cell = row.append("th");
+              //adding cell text value to html
+                cell.text(value);
+              });  
+          });
+  }
+
+  else if (propinput("#state") != "") {
+        //filter data based off input value
+        filteredData = filteredData.filter(record => record.state === inputValue);
+        //ensure the table body is blank 
+        addtbody.html("");
+        //loop through each reord 
+        filteredData.forEach((record) => {
+          //add a new row for each object
+          var row = addtbody.append("tr").attr('class', 'table-row');
+          //looping through every object 
+          Object.entries(record).forEach(([key, value]) => {
+              //adding cells th element to html 
+              var cell = row.append("th");
+              //adding cell text value to html
+                cell.text(value);
+            });  
+        });
+  }
+else if (propinput("#country") != "") {
+      //filter data based off input value
+      filteredData = filteredData.filter(record => record.country === inputValue);
+      //ensure the table body is blank 
+      addtbody.html("");
+      //loop through each reord 
+      filteredData.forEach((record) => {
+        //add a new row for each object
+        var row = addtbody.append("tr").attr('class', 'table-row');
+        //looping through every object 
+        Object.entries(record).forEach(([key, value]) => {
+            //adding cells th element to html 
+            var cell = row.append("th");
+            //adding cell text value to html
+              cell.text(value);
+            });  
+        });
+}
+else if (propinput("#shape") != "") {
+      //filter data based off input value
+      filteredData = filteredData.filter(record => record.shape === inputValue);
+      //ensure the table body is blank 
+      addtbody.html("");
+      //loop through each reord 
+      filteredData.forEach((record) => {
+        //add a new row for each object
+        var row = addtbody.append("tr").attr('class', 'table-row');
+        //looping through every object 
+        Object.entries(record).forEach(([key, value]) => {
+            //adding cells th element to html 
+            var cell = row.append("th");
+            //adding cell text value to html
+              cell.text(value);
+            });  
+       });
+}
+  else{
+    index();
+  }
 };
 
-var inputElement = d3.select("#datetime");
-  //console.log(inputElement);
-  // Get the value property of the input element
-var inputValue = inputElement.property("value");
-// Create event handlers 
-
-if (inputValue != ""){
-button.on("click", runEnter);
-form.on("submit",runEnter);
-//using d3 to locate the table value
-}
-else{
-//looping through my lis of object s
+//creating hompe page function
+function index() {
 ufotable.forEach((record) => {
     //add a new row for each object
-    var row = addtbody.append("tr");
+    var row = addtbody.append("tr").attr('class', 'table-row');
     //looping through every object 
     Object.entries(record).forEach(([key, value]) => {
         //adding cells th element to html 
@@ -58,5 +131,11 @@ ufotable.forEach((record) => {
          //adding cell text value to html
           cell.text(value);
         })  
-});
+    });
 };
+
+index();
+
+//set listener
+button.on("click", runEnter);
+
